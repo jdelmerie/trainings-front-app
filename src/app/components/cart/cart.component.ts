@@ -10,7 +10,6 @@ import { CartService } from 'src/app/services/cart.service'; //import de la dép
 export class CartComponent implements OnInit {
   cart: Training[] | undefined;
   total: number = 0;
-  amount:number = 0;
 
   constructor(private cartService: CartService) {}
 
@@ -21,7 +20,8 @@ export class CartComponent implements OnInit {
 
   delete(training: Training) {
     this.cartService.removeTraining(training.id);
-    this.displayTotal(); 
+    this.cart = this.cartService.getCart();
+    this.displayTotal();
   }
 
   displayTotal() {

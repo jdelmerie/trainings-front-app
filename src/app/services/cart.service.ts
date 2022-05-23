@@ -1,44 +1,57 @@
 import { Injectable } from '@angular/core';
-
 import { Training } from 'src/app/model/training'; // import de la class
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  cart: Training[] = [];
+  cartTab: Training[] = [];
+  cart: Map<number, Training>;
 
-  constructor() {}
+  constructor() {
+    let cart = localStorage.getItem('cart');
+    if (cart) {
+      this.cart = new Map(JSON.parse(cart));
+    } else {
+      this.cart = new Map<number, Training>();
+    }
+  }
+
+  //update localstorage on add and remove
+  saveCart() {
+    localStorage.setItem('cart', JSON.stringify([...this.cart]));
+  }
 
   //add item to cart
   addTraining(training: Training) {
-    this.cart.push(training);
+    this.cartTab.push(training);
+    this.cart.set(training.id, training);
+    this.saveCart();
   }
 
   //delete item from cart
   removeTraining(id: number) {
-    let objToRemove = this.cart.find((training) => {
-      return training.id == id;
-    });
+    let training = this.cart.get(id);
 
-    if (objToRemove != null) {
-      if (objToRemove.quantity == 1) {
-        this.cart.splice(this.cart.indexOf(objToRemove, 1));
+    if (training != null) {
+      if (training.quantity == 1) {
+        this.cart.delete(training.id);
       } else {
-        objToRemove.quantity = objToRemove.quantity - 1;
+        training.quantity = training.quantity - 1;
       }
+      this.saveCart();
     }
   }
 
   //return cart
   getCart() {
-    return this.cart;
+    return Array.from(this.cart.values());
   }
 
   //return total amount
   getTotalAmount() {
     let total = 0;
-    for (let item of this.cart) {
+    for (let item of this.cart.values()) {
       total += item.price * item.quantity;
     }
     return total;
