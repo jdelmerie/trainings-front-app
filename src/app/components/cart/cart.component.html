@@ -1,0 +1,36 @@
+<div class="container">
+  <h5>Votre panier</h5>
+  <ng-container *ngIf="cart">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">NOM</th>
+          <th scope="col">QUANTITE</th>
+          <th scope="col">PRIX UNITAIRE</th>
+          <th scope="col">TOTAL</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of cart">
+          <th scope="row">{{ c.id }}</th>
+          <td>{{ c.name }}</td>
+          <td>{{ c.quantity }}</td>
+          <td>{{ c.price }} €</td>
+          <td>{{ c.price * c.quantity }} €</td>
+          <td>
+            <a class="btn btn-danger" (click)="delete(c)">Supprimer</a>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">Total</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>{{ total }} €</td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+</div>
