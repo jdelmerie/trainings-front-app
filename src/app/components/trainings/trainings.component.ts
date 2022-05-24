@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Training } from 'src/app/model/training'; // import de la class
-import { CartService } from 'src/app/services/cart.service'; //import de la dépendance
+import { Training } from 'src/app/model/training';
+import { CartService } from 'src/app/services/cart.service';
 import { Router } from '@angular/router';
+import { TrainingsService } from 'src/app/services/trainings.service';
 
 @Component({
   selector: 'app-trainings',
@@ -11,37 +12,28 @@ import { Router } from '@angular/router';
 })
 export class TrainingsComponent implements OnInit {
   listTrainings: Training[] | undefined;
+  error = null;
 
-  constructor(private cartService: CartService, private router:Router) {}
+  constructor(
+    private cartService: CartService,
+    private router: Router,
+    private trainingsService: TrainingsService
+  ) {}
 
   ngOnInit(): void {
-    this.listTrainings = [
-      {
-        id: 1,
-        name: 'Java',
-        description: 'Formation Java SE 8 sur 5 jours',
-        price: 1500,
-        quantity: 1,
-      },
-      {
-        id: 2,
-        name: 'DotNet',
-        description: 'Formation DotNet sur 3 jours',
-        price: 1000,
-        quantity: 1,
-      },
-      {
-        id: 3,
-        name: 'Python',
-        description: 'Formation Python/Django sur 5 jours',
-        price: 1500,
-        quantity: 1,
-      },
-    ];
+    this.getAllTrainings();
+  }
+
+  getAllTrainings() {
+    this.trainingsService.getTrainings().subscribe({
+      next: (data) => (this.listTrainings = data),
+      error: (err) => (this.error = err.message),
+      complete: () => (this.error = null),
+    });
   }
 
   addToCart(training: Training) {
     this.cartService.addTraining(training);
-    this.router.navigateByUrl('cart')
+    this.router.navigateByUrl('cart');
   }
 }
