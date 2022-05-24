@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Training } from 'src/app/model/training'; // import de la class
+import { Customer } from '../model/customer';
 
 @Injectable({
   providedIn: 'root',
@@ -17,9 +18,14 @@ export class CartService {
     }
   }
 
-  //update localstorage on add and remove
+  //update cart localstorage on add and remove
   saveCart() {
     localStorage.setItem('cart', JSON.stringify([...this.cart]));
+  }
+
+  //update customer in localstorage
+  saveCustomer(customer: Customer) {
+    localStorage.setItem('customer', JSON.stringify(customer));
   }
 
   //add item to cart
@@ -55,5 +61,19 @@ export class CartService {
       total += item.price * item.quantity;
     }
     return total;
+  }
+
+  //return customer from localstorage
+  getCustomer(): Customer {
+    let customer = localStorage.getItem('customer');
+    if (customer) {
+      return JSON.parse(customer);
+    }
+    return new Customer('unknown', '', '', '', '');
+  }
+
+  clear() {
+    this.cart.clear();
+    localStorage.clear();
   }
 }

@@ -13,24 +13,22 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let c of cart">
-          <th scope="row">{{ c.id }}</th>
-          <td>{{ c.name }}</td>
-          <td>{{ c.quantity }}</td>
-          <td>{{ c.price }} €</td>
-          <td>{{ c.price * c.quantity }} €</td>
+        <tr *ngFor="let item of cart">
+          <th scope="row">{{ item.id }}</th>
+          <td>{{ item.name }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.price }} €</td>
+          <td>{{ item.price * item.quantity }} €</td>
           <td>
-            <a class="btn btn-danger" (click)="delete(c)">Supprimer</a>
+            <a class="btn btn-danger" (click)="delete(item)">Supprimer</a>
           </td>
         </tr>
         <tr>
-          <th scope="row">Total</th>
-          <td></td>
-          <td></td>
-          <td></td>
+          <th colspan="4">Total</th>
           <td>{{ total }} €</td>
         </tr>
       </tbody>
     </table>
+    <button class="btn btn-success" (click)="newOrder()">Commander</button>
   </ng-container>
 </div>

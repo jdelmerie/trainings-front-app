@@ -8,13 +8,17 @@ import { CartService } from './services/cart.service';
 import { FormsModule } from '@angular/forms';
 import { CartComponent } from './components/cart/cart.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { CustomerComponent } from './components/customer/customer.component';
+import { OrderComponent } from './components/order/order.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TrainingsComponent,
     CartComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    CustomerComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
