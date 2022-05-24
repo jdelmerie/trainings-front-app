@@ -1,8 +1,8 @@
 <div class="container">
-  <ng-container *ngIf="cart">
+  <ng-container *ngIf="(cart | keyvalue)?.length; else empty">
     <h5>Votre panier</h5>
     <table class="table">
-      <thead>
+      <thead class="table-light">
         <tr>
           <th scope="col">ID</th>
           <th scope="col">NOM</th>
@@ -35,4 +35,7 @@
     </table>
     <button class="btn btn-success" (click)="newOrder()">Commander</button>
   </ng-container>
+  <ng-template #empty>
+    <h5>Votre panier est vide</h5>
+  </ng-template>
 </div>

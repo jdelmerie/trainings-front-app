@@ -4,13 +4,13 @@ import { Training } from '../model/training';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TrainingsService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http:HttpClient) { }
-
-  public getTrainings(){
-    return this.http.get<Training[]>(environment.host+"/trainings");
+  //get all trainings from api 
+  public getTrainings() {
+    return this.http.get<Training[]>(environment.host + '/trainings');
   }
 }

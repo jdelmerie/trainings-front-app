@@ -33,7 +33,9 @@ export class TrainingsComponent implements OnInit {
   }
 
   addToCart(training: Training) {
-    this.cartService.addTraining(training);
-    this.router.navigateByUrl('cart');
+    if (training.quantity > 0) {
+      this.cartService.addTraining(training);
+      this.router.navigateByUrl('cart');
+    }
   }
 }
