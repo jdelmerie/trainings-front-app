@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Training } from 'src/app/model/training'; 
 import { CartService } from 'src/app/services/cart.service'; 
+import { AuthentificationService } from 'src/app/services/authentification.service';
+import { User } from 'src/app/model/user';
 
 @Component({
   selector: 'app-cart',
@@ -11,8 +13,10 @@ import { CartService } from 'src/app/services/cart.service';
 export class CartComponent implements OnInit {
   cart: Training[] | undefined;
   total: number = 0;
+  currentUser: User | undefined;
+  error = null;
 
-  constructor(private cartService: CartService, private router : Router) {}
+  constructor(private cartService: CartService, private router : Router, private authSerive: AuthentificationService ) {}
 
   ngOnInit(): void {
     this.cart = this.cartService.getCart();
@@ -31,6 +35,6 @@ export class CartComponent implements OnInit {
   }
 
   newOrder(){
-    this.router.navigateByUrl('customer');
+    this.router.navigateByUrl('login');
   }
 }

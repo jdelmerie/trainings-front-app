@@ -49,5 +49,24 @@
       "price": 1000,
       "quantity": 1
     }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "delmerie",
+      "password": "123",
+      "role": [
+        "ADMIN",
+        "USER"
+      ]
+    },
+    {
+      "id": 2,
+      "username": "caroline",
+      "password": "123",
+      "role": [
+        "USER"
+      ]
+    }
   ]
 }

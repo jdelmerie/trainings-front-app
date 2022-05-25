@@ -49,7 +49,6 @@ export class CustomerComponent implements OnInit {
         form.value.phone,
         form.value.email
       );
-      console.log(this.customer);
       this.cartService.saveCustomer(this.customer);
       this.router.navigateByUrl('order');
     } else {
