@@ -5,16 +5,15 @@ import { User } from '../model/user';
   providedIn: 'root',
 })
 export class AuthentificationService {
-  fakeUsername: string = 'del';
-  fakePassword: string = '123';
   user: User | undefined;
   currentUser: Map<string, String> | undefined;
   isLogged: boolean = false;
+  isAdmin: boolean = false;
 
   private users = [
-    { username: 'mohamed', password: '1234', roles: ['ADMIN', 'USER'] },
-    { username: 'del', password: '123', roles: ['USER'] },
-    { username: 'hugo', password: '1234', roles: ['USER'] },
+    { name: 'mohamed', password: '123', roles: ['ADMIN', 'USER'] },
+    { name: 'del', password: '123', roles: ['USER'] },
+    { name: 'hugo', password: '123', roles: ['USER'] },
   ];
 
   constructor() {
@@ -23,43 +22,39 @@ export class AuthentificationService {
 
   //save current user in localstorage
   saveCurrentUser(user: User) {
-    localStorage.setItem(
-      'currentUser',
-      JSON.stringify({ username: user.username, role: user.role[0] })
-    );
+    localStorage.setItem('currentUser', JSON.stringify(user));
   }
 
+  //check if user existe and login to order
   login(username: string, password: string) {
-    // for (let u of this.users) {
-    //   if (username == u.username && password == u.password) {
-    //     this.user = new User(u.username, u.password, u.roles);
-    //     this.isLogged = true;
-    //   } else {
-    //     this.user = new User('unknown', '', []);
-    //     this.isLogged = false;
-    //   }
-    //   this.saveCurrentUser(this.user);
-    //   console.log(this.getCurrentUser() + " log : " + this.isLogged);
-    // }
+    if (!this.isLogged) {
+      for (let u of this.users) {
+        if (username == u.name && password == u.password) {
+          this.user = new User(u.name, u.password, u.roles);
+          this.saveCurrentUser(this.user);
+          this.isLogged = true;
 
-    if (username == 'delddddddddddd' && password == '123') {
-      this.user = new User(username, password, ['USER']);
-      this.isLogged = true;
-    } else {
-      this.user = new User('unknown', '', []);
+          for (let r of u.roles) {
+            if (r == 'ADMIN') {
+              this.isAdmin = true;
+            }
+          }
+        }
+      }
     }
-    this.saveCurrentUser(this.user);
-    console.log(this.getCurrentUser() + ' log : ' + this.isLogged);
   }
 
-  getCurrentUser() {
+  getUser(): User {
     let currentUser = localStorage.getItem('currentUser');
     if (currentUser) {
       return JSON.parse(currentUser);
     }
+    return new User('', '', []);
   }
 
-  getUser() {
-    return this.user;
+  //disconnect user
+  logout() {
+    localStorage.removeItem('currentUser');
+    this.isLogged = false;
   }
 }

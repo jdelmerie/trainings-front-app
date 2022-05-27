@@ -11,7 +11,6 @@ import { AuthentificationService } from 'src/app/services/authentification.servi
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  user = this.authService.getUser();
   displayError: boolean = false;
 
   constructor(
@@ -25,7 +24,8 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   onSubmit(form: FormGroup) {
     if (form.valid) {
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
       if (!this.authService.isLogged) {
         this.displayError = true;
       } else {
-        this.router.navigateByUrl('customer');
+        this.router.navigateByUrl('cart');
       }
     }
   }

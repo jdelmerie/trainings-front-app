@@ -21,6 +21,11 @@
             Email : {{ cartService.getCustomer().email }}
           </li>
         </ul>
+        <div class="justify-content-md-end my-3">
+          <button class="btn btn-danger" (click)="onUpdateCustomer()">
+            Modifier vos informations
+          </button>
+        </div>
       </div>
 
       <div class="col-md-6">

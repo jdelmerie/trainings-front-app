@@ -8,8 +8,25 @@
       <li class="nav-item">
         <a class="nav-link active" routerLink="/cart">Panier</a>
       </li>
+      <li class="nav-item" *ngIf="isAdmin()">
+        <a class="nav-link active" routerLink="/admin">Panel Admin</a>
+      </li>
+      <li class="nav-item" *ngIf="!isLogged(); else displayBtn">
+        <a class="nav-link active" routerLink="/login">Se connecter</a>
+      </li>
+      <ng-template #displayBtn>
+        <li class="nav-item">
+          <button class="btn btn-danger" (click)="logout()">
+            Se déconnecter
+          </button>
+        </li>
+      </ng-template>
     </ul>
   </div>
 </nav>
+
+<div class="container my-5" *ngIf="isLogged()">
+  <strong>Vous êtes connecté. {{ getUsername() }}</strong>
+</div>
 
 <router-outlet></router-outlet>

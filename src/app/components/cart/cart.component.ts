@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Training } from 'src/app/model/training'; 
-import { CartService } from 'src/app/services/cart.service'; 
+import { Training } from 'src/app/model/training';
+import { CartService } from 'src/app/services/cart.service';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { User } from 'src/app/model/user';
 
@@ -16,11 +16,15 @@ export class CartComponent implements OnInit {
   currentUser: User | undefined;
   error = null;
 
-  constructor(private cartService: CartService, private router : Router, private authSerive: AuthentificationService ) {}
+  constructor(
+    private cartService: CartService,
+    private router: Router,
+    private authSerive: AuthentificationService
+  ) {}
 
   ngOnInit(): void {
     this.cart = this.cartService.getCart();
-    this.displayTotal(); 
+    this.displayTotal();
   }
 
   delete(training: Training) {
@@ -34,7 +38,11 @@ export class CartComponent implements OnInit {
     return this.total;
   }
 
-  newOrder(){
-    this.router.navigateByUrl('login');
+  newOrder() {
+    if (this.authSerive.isLogged) {
+      this.router.navigateByUrl('customer');
+    } else {
+      this.router.navigateByUrl('login');
+    }
   }
 }

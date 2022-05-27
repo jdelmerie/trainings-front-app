@@ -13,6 +13,10 @@ export class OrderComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  onUpdateCustomer(){
+    this.router.navigateByUrl('customer');
+  }
+
   onOrder() {
     if (confirm("Aujourd'hui c'est gratuit, merci de votre visite !")) {
       this.cartService.clear();
