@@ -22,7 +22,6 @@ export class TrainingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllTrainings();
-    
   }
 
   getAllTrainings() {

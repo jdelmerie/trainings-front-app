@@ -30,7 +30,7 @@ export class AuthentificationService {
     if (!this.isLogged) {
       for (let u of this.users) {
         if (username == u.name && password == u.password) {
-          this.user = new User(u.name, u.password, u.roles);
+          this.user = new User(u.name, window.btoa(u.password), u.roles);
           this.saveCurrentUser(this.user);
           this.isLogged = true;
 

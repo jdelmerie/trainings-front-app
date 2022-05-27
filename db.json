@@ -48,6 +48,20 @@
       "description": "ECMA6 sur 5 jours",
       "price": 1000,
       "quantity": 1
+    },
+    {
+      "id": 12,
+      "name": "CSS Frameworks",
+      "description": "Bootstrap pour les nuls",
+      "price": 500,
+      "quantity": 1
+    },
+    {
+      "id": 14,
+      "name": "DotNet",
+      "description": "Formation DotNet sur 3 jours",
+      "price": 1000,
+      "quantity": 1
     }
   ],
   "users": [

@@ -1,1 +1,69 @@
-<p>admin works!</p>
+<div class="container">
+  <h4 class="mb-3">Liste de vos formations</h4>
+  <button class="btn btn-primary btn-sm">Ajouter</button>
+  <ng-container *ngIf="(listTrainings | keyvalue)?.length; else empty">
+    <table class="table">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">NOM</th>
+          <th scope="col">DESCRIPTION</th>
+          <th scope="col">PRIX</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let training of listTrainings">
+          <th scope="row">{{ training.id }}</th>
+          <td>{{ training.name }}</td>
+          <td>{{ training.description }}</td>
+          <td>{{ training.price }} €</td>
+          <td>
+            <a class="btn btn-warning btn-sm" (click)="updateTraining(training)">Modifier</a>&nbsp;
+            <a class="btn btn-danger btn-sm" (click)="deleteTraining(training)">Supprimer</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+  <ng-template #empty>
+    <h5>Loading...</h5>
+  </ng-template>
+</div>
+
+<div class="container mt-5">
+  <form [formGroup]="myForm" (ngSubmit)="onSaveTraining(myForm)">
+    <div class="row">
+      <div class="mb-3 col-md-8">
+        <label for="trainingName" class="form-label">Nom de la formation</label>
+        <input
+          type="text"
+          class="form-control"
+          id="trainingName"
+          formControlName="name"
+        />
+      </div>
+      <div class="mb-3 col-md-4">
+        <label for="trainingName" class="form-label">Prix</label>
+        <input
+          type="number"
+          class="form-control"
+          id="trainingName"
+          min="1"
+          formControlName="price"
+        />
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="trainingName" class="form-label">Description</label>
+      <input
+        type="text"
+        class="form-control"
+        id="trainingName"
+        formControlName="description"
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enregister</button>
+  </form>
+</div>
