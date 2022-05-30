@@ -44,17 +44,17 @@ export class AuthentificationService {
     }
   }
 
+  //disconnect user
+  logout() {
+    localStorage.removeItem('currentUser');
+    this.isLogged = false;
+  }
+
   getUser(): User {
     let currentUser = localStorage.getItem('currentUser');
     if (currentUser) {
       return JSON.parse(currentUser);
     }
     return new User('', '', []);
-  }
-
-  //disconnect user
-  logout() {
-    localStorage.removeItem('currentUser');
-    this.isLogged = false;
   }
 }

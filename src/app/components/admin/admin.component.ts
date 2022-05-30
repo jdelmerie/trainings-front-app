@@ -72,16 +72,16 @@ export class AdminComponent implements OnInit {
   }
 
   //à revoir
-  updateTraining(tr: Training) {
-    this.trainingsService.getOneTraining(tr).subscribe((data) => {
-      this.training = data;
-    });
-    this.myForm = this.formBuilder.group({
-      name: [this.training?.name, [Validators.required]],
-      description: [this.training?.description, [Validators.required]],
-      price: [this.training?.price, [Validators.required]],
-    });
-  }
+  // updateTraining(tr: Training) {
+  //   this.trainingsService.getOneTraining(tr).subscribe((data) => {
+  //     this.training = data;
+  //   });
+  //   this.myForm = this.formBuilder.group({
+  //     name: [this.training?.name, [Validators.required]],
+  //     description: [this.training?.description, [Validators.required]],
+  //     price: [this.training?.price, [Validators.required]],
+  //   });
+  // }
 
   // displayFormOnClick() {
   //   this.displayForm = this.displayForm ? false : true;

@@ -37,6 +37,13 @@ export class TrainingsService {
     );
   }
 
+  //delete
+  public deleteTr(training: Training) {
+    return this.http.delete<Training>(
+      environment.host + '/trainings/' + training.id
+    );
+  }
+
   public update(training: Training) {
     return this.http.put<Training>(
       environment.host + '/trainings/' + training.id,
@@ -44,21 +51,4 @@ export class TrainingsService {
       this.httpOptions
     );
   }
-
-  //delete 
-  public deleteTr(training: Training) {
-    return this.http.delete<Training>(
-      environment.host + '/trainings/' + training.id
-    );
-  }
-
-  // public checkIfExist(training: Training) {
-  //   if (this.getOneTraining(training)) {
-  //     console.log("formation existe donc modifier")
-  //     return false;
-  //   } else {
-  //     console.log("a crée")
-  //     return true;
-  //   }
-  // }
 }

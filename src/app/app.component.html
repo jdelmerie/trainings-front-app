@@ -11,10 +11,10 @@
       <li class="nav-item" *ngIf="isAdmin()">
         <a class="nav-link active" routerLink="/admin">Panel Admin</a>
       </li>
-      <li class="nav-item" *ngIf="!isLogged(); else displayBtn">
+      <li class="nav-item" *ngIf="!isLogged(); else logoutBtn">
         <a class="nav-link active" routerLink="/login">Se connecter</a>
       </li>
-      <ng-template #displayBtn>
+      <ng-template #logoutBtn>
         <li class="nav-item">
           <button class="btn btn-danger" (click)="logout()">
             Se déconnecter
@@ -26,7 +26,7 @@
 </nav>
 
 <div class="container my-5" *ngIf="isLogged()">
-  <strong>Vous êtes connecté. {{ getUsername() }}</strong>
+  <strong>Vous êtes connecté. </strong>
 </div>
 
 <router-outlet></router-outlet>

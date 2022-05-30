@@ -62,6 +62,13 @@
       "description": "Formation DotNet sur 3 jours",
       "price": 1000,
       "quantity": 1
+    },
+    {
+      "id": 15,
+      "name": "Microsoft 360",
+      "description": "Word, Excel, Pwp",
+      "price": 500,
+      "quantity": 1
     }
   ],
   "users": [
