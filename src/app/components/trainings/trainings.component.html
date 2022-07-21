@@ -6,6 +6,7 @@
           <th scope="col">ID</th>
           <th scope="col">NOM</th>
           <th scope="col">DESCRIPTION</th>
+          <th scope="col">CATEGORIE</th>
           <th scope="col">PRIX</th>
           <th scope="col">QUANTITE</th>
           <th scope="col">PANIER</th>
@@ -16,6 +17,7 @@
           <th scope="row">{{ training.id }}</th>
           <td>{{ training.name }}</td>
           <td>{{ training.description }}</td>
+          <td>{{ training.category.name }}</td>
           <td>{{ training.price }} €</td>
           <td>
             <input

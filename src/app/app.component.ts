@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthentificationService } from './services/authentification.service';
+import { CartService } from './services/cart.service';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ export class AppComponent {
 
   constructor(
     private authService: AuthentificationService,
+    private cartService: CartService,
     private router: Router
   ) {}
 

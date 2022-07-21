@@ -22,9 +22,9 @@ export class TrainingsService {
   }
 
   //get training by id
-  public getOneTraining(training: Training) {
+  public getOneTraining(id: number) {
     return this.http.get<Training>(
-      environment.host + '/trainings/' + training.id
+      environment.host + '/training/' + id
     );
   }
 
@@ -32,15 +32,14 @@ export class TrainingsService {
   public add(training: Training) {
     return this.http.post<Training>(
       environment.host + '/trainings',
-      training,
-      this.httpOptions
+      training
     );
   }
 
   //delete
-  public deleteTr(training: Training) {
+  public deleteTr(id: number) {
     return this.http.delete<Training>(
-      environment.host + '/trainings/' + training.id
+      environment.host + '/trainings/' + id
     );
   }
 

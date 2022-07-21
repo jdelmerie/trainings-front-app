@@ -33,6 +33,9 @@ export class LoginComponent implements OnInit {
       if (!this.authService.isLogged) {
         this.displayError = true;
       } else {
+
+        
+
         this.router.navigateByUrl('cart');
       }
     }

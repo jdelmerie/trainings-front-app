@@ -1,6 +1,6 @@
 <div class="container">
   <h4 class="mb-3">Liste de vos formations</h4>
-  <button class="btn btn-primary btn-sm">Ajouter</button>
+  <a class="btn btn-primary btn-sm" href="#" routerLink="/training/?">Ajouter une formation</a>
   <ng-container *ngIf="(listTrainings | keyvalue)?.length; else empty">
     <table class="table">
       <thead class="table-light">
@@ -19,8 +19,8 @@
           <td>{{ training.description }}</td>
           <td>{{ training.price }} €</td>
           <td>
-            <a class="btn btn-warning btn-sm disabled">Modifier</a>&nbsp;
-            <a class="btn btn-danger btn-sm" (click)="deleteTraining(training)">Supprimer</a>
+            <a class="btn btn-warning btn-sm" (click)="onUpdateTraining(training)">Modifier</a>&nbsp;
+            <a class="btn btn-danger btn-sm" (click)="deleteTraining(training.id)">Supprimer</a>
           </td>
         </tr>
       </tbody>
@@ -31,39 +31,3 @@
   </ng-template>
 </div>
 
-<div class="container mt-5">
-  <form [formGroup]="myForm" (ngSubmit)="onSaveTraining(myForm)">
-    <div class="row">
-      <div class="mb-3 col-md-8">
-        <label for="trainingName" class="form-label">Nom de la formation</label>
-        <input
-          type="text"
-          class="form-control"
-          id="trainingName"
-          formControlName="name"
-        />
-      </div>
-      <div class="mb-3 col-md-4">
-        <label for="trainingName" class="form-label">Prix</label>
-        <input
-          type="number"
-          class="form-control"
-          id="trainingName"
-          min="1"
-          formControlName="price"
-        />
-      </div>
-    </div>
-    <div class="mb-3">
-      <label for="trainingName" class="form-label">Description</label>
-      <input
-        type="text"
-        class="form-control"
-        id="trainingName"
-        formControlName="description"
-      />
-    </div>
-
-    <button type="submit" class="btn btn-primary">Enregister</button>
-  </form>
-</div>

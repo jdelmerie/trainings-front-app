@@ -11,8 +11,8 @@ export class AuthentificationService {
   isAdmin: boolean = false;
 
   private users = [
-    { name: 'mohamed', password: '123', roles: ['ADMIN', 'USER'] },
-    { name: 'del', password: '123', roles: ['USER'] },
+    { name: 'mohamed', password: '123', roles: ['USER'] },
+    { name: 'del', password: '123', roles: ['ADMIN', 'USER'] },
     { name: 'hugo', password: '123', roles: ['USER'] },
   ];
 
@@ -42,12 +42,15 @@ export class AuthentificationService {
         }
       }
     }
+
+    console.log("auth service : isAdmin : " + this.isAdmin)
   }
 
   //disconnect user
   logout() {
     localStorage.removeItem('currentUser');
     this.isLogged = false;
+    this.isAdmin = false;
   }
 
   getUser(): User {

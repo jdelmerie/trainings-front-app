@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { TrainingComponent } from './components/training/training.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { AdminComponent } from './components/admin/admin.component';
     OrderComponent,
     LoginComponent,
     AdminComponent,
+    TrainingComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule, ReactiveFormsModule],
   providers: [CartService],

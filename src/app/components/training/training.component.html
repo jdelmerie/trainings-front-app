@@ -1,0 +1,49 @@
+<div class="container mt-5">
+  <form [formGroup]="myForm" (ngSubmit)="onSaveTraining(myForm)">
+    <div class="row">
+      <div class="mb-3 col-md-8">
+        <input
+          type="hidden"
+          class="form-control"
+          id="id"
+          formControlName="id"
+        />
+      </div>
+      <div class="mb-3 col-md-8">
+        <label for="trainingName" class="form-label">Nom de la formation</label>
+        <input
+          type="text"
+          class="form-control"
+          id="trainingName"
+          formControlName="name"
+        />
+      </div>
+      <div class="mb-3 col-md-4">
+        <label for="trainingName" class="form-label">Prix</label>
+        <input
+          type="number"
+          class="form-control"
+          id="trainingName"
+          min="1"
+          formControlName="price"
+        />
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="trainingName" class="form-label">Description</label>
+      <input
+        type="text"
+        class="form-control"
+        id="trainingName"
+        formControlName="description"
+      />
+    </div>
+    <button *ngIf="!status" type="submit" class="btn btn-primary">
+      Ajouter 
+    </button>
+    <button *ngIf="status" type="submit" class="btn btn-primary">
+      Mise à jour
+    </button>
+    <div class="text-danger">{{ error }}</div>
+  </form>
+</div>

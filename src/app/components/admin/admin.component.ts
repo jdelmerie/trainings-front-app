@@ -17,6 +17,7 @@ export class AdminComponent implements OnInit {
   training: Training | undefined;
   displayForm: boolean = false;
   typeForm: string = '';
+  isAdmin: boolean = false;
 
   constructor(
     private authService: AuthentificationService,
@@ -32,9 +33,16 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (localStorage.getItem('userConnected') != null) {
+      console.log('peut se connecter');
+      this.isAdmin = true;
+    } else {
+      console.log('doit se login');
+    }
+
     this.getAllTrainings();
     if (!this.authService.isAdmin) {
-      this.router.navigateByUrl('');
+      this.router.navigateByUrl('/login');
     }
   }
 
@@ -46,44 +54,18 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  onSaveTraining(myForm: FormGroup) {
-    if (myForm.valid) {
-      this.training = new Training(
-        0,
-        myForm.value.name,
-        myForm.value.description,
-        myForm.value.price
-      );
-      this.addTraining(this.training);
+  deleteTraining(id: number) {
+    if (confirm('Vous êtes sur de vouloir supprimer cette formation ?')) {
+      this.trainingsService.deleteTr(id).subscribe({
+        next: (data) => console.log(data),
+        error: (err) => (this.error = err.message),
+        complete: () => this.getAllTrainings(),
+      });
+      console.log(id);
     }
   }
 
-  addTraining(training: Training) {
-    this.trainingsService.add(training).subscribe((data) => {
-      training = data;
-    });
+  onUpdateTraining(training: Training) {
+    this.router.navigateByUrl('training/' + training.id);
   }
-
-  deleteTraining(training: Training) {
-    this.trainingsService.deleteTr(training).subscribe((data) => {
-      alert('Formation supprimée');
-      //TODO : confirmation message
-    });
-  }
-
-  //à revoir
-  // updateTraining(tr: Training) {
-  //   this.trainingsService.getOneTraining(tr).subscribe((data) => {
-  //     this.training = data;
-  //   });
-  //   this.myForm = this.formBuilder.group({
-  //     name: [this.training?.name, [Validators.required]],
-  //     description: [this.training?.description, [Validators.required]],
-  //     price: [this.training?.price, [Validators.required]],
-  //   });
-  // }
-
-  // displayFormOnClick() {
-  //   this.displayForm = this.displayForm ? false : true;
-  // }
 }

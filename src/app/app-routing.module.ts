@@ -7,7 +7,8 @@ import { CustomerComponent } from './components/customer/customer.component';
 import { OrderComponent } from './components/order/order.component';
 import { LoginComponent } from './components/login/login.component';
 import { AdminComponent } from './components/admin/admin.component';
-
+import { TrainingComponent } from './components/training/training.component';
+import { AuthGuardService } from './services/auth-guard.service';
 const routes: Routes = [
   {
     path: 'trainings',
@@ -32,11 +33,16 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: '',
     redirectTo: 'trainings',
     pathMatch: 'full',
+  },
+  {
+    path: 'training/:id',
+    component: TrainingComponent,
   },
   {
     path: '404',
