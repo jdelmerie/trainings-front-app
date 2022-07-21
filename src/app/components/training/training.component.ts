@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from 'src/app/model/category';
 import { Training } from 'src/app/model/training';
 import { AuthentificationService } from 'src/app/services/authentification.service';
+import { CategoriesService } from 'src/app/services/categories.service';
 import { TrainingsService } from 'src/app/services/trainings.service';
 
 @Component({
@@ -18,39 +19,47 @@ export class TrainingComponent implements OnInit {
   displayForm: boolean = false;
   status: boolean = false;
   isAdmin: boolean = false;
+  title: string = 'Ajouter une formation';
+  categories: Category[] | undefined;
+  category: Category = new Category(0, '');
 
   constructor(
     private authService: AuthentificationService,
     private router: Router,
     private trainingsService: TrainingsService,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private categoriesService: CategoriesService
   ) {
     this.myForm = this.formBuilder.group({
       id: [0, [Validators.required]],
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
       price: ['', [Validators.required]],
+      category: [null, Validators.required],
     });
   }
   ngOnInit(): void {
-    if (this.authService.isAdmin){
-       let id = this.route.snapshot.params['id'];
-       if (id > 0) {
-         this.status = true;
-         this.trainingsService.getOneTraining(id).subscribe({
-           next: (data) => {
-             this.training = data;
-             this.myForm.setValue({
-               id: this.training.id,
-               name: this.training.name,
-               description: this.training.description,
-               price: this.training.price,
-             });
-           },
-           error: (err) => (this.error = err),
-         });
-       }
+    if (this.authService.isAdmin) {
+      this.getCategories();
+      let id = this.route.snapshot.params['id'];
+      if (id > 0) {
+        this.status = true;
+        this.title = 'Modifier cette formation';
+        this.trainingsService.getOneTraining(id).subscribe({
+          next: (data) => {
+            this.training = data;
+            this.myForm.setValue({
+              id: this.training.id,
+              name: this.training.name,
+              description: this.training.description,
+              price: this.training.price,
+              category: this.training.category.id,
+            });
+          },
+          error: (err) => (this.error = err),
+        });
+      }
     } else {
       this.router.navigateByUrl('/login');
     }
@@ -59,13 +68,14 @@ export class TrainingComponent implements OnInit {
   onSaveTraining(myForm: FormGroup) {
     if (myForm.valid) {
       this.training = new Training(
-        0,
+        myForm.value.id,
         myForm.value.name,
         myForm.value.description,
         myForm.value.price,
         1,
-        new Category(0, '')
+        new Category(myForm.value.category, '')
       );
+      console.log(myForm.value);
       if (this.status) {
         this.updateTraining(this.training);
       } else {
@@ -87,6 +97,22 @@ export class TrainingComponent implements OnInit {
       next: (data) => console.log(data),
       error: (err) => (this.error = err.message),
       complete: () => this.router.navigateByUrl('admin'),
+    });
+  }
+
+  getCategories() {
+    this.categoriesService.getCategories().subscribe({
+      next: (data) => (this.categories = data),
+      error: (err) => (this.error = err.message),
+      complete: () => (this.error = null),
+    });
+  }
+
+  getOneCategory(id: number) {
+    this.categoriesService.getOneCategory(id).subscribe({
+      next: (data) => (this.category = data),
+      error: (err) => (this.error = err.message),
+      complete: () => (this.error = null),
     });
   }
 }

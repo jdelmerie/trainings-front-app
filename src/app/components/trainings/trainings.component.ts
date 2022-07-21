@@ -24,8 +24,7 @@ export class TrainingsComponent implements OnInit {
     private cartService: CartService,
     private router: Router,
     private trainingsService: TrainingsService,
-    private categoriesService: CategoriesService,
-    private route: ActivatedRoute
+    private categoriesService: CategoriesService
   ) {}
 
   ngOnInit(): void {

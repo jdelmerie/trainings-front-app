@@ -45,7 +45,7 @@ export class TrainingsService {
 
   public update(training: Training) {
     return this.http.put<Training>(
-      environment.host + '/trainings/' + training.id,
+      environment.host + '/training/' + training.id,
       training,
       this.httpOptions
     );
