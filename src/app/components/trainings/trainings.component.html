@@ -1,12 +1,23 @@
 <div class="container">
+  <ul class="nav nav-tabs mb-3">
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" (click)="getAllTrainings()">Toutes les formations</a>
+    </li>
+    <ng-container *ngIf="(categories | keyvalue)?.length; else empty">
+      <li class="nav-item" *ngFor="let cat of categories">
+        <a class="nav-link active" aria-current="page" (click)="getByCategories(cat.id)" >{{ cat.name }}</a>
+      </li>
+    </ng-container>
+  </ul>
+  <!-- [routerLink]="['/trainings/categorie/', '{{cat.id}}']" -->
   <ng-container *ngIf="(listTrainings | keyvalue)?.length; else empty">
+    <h2>{{title}}</h2>
     <table class="table">
       <thead class="table-light">
         <tr>
           <th scope="col">ID</th>
           <th scope="col">NOM</th>
           <th scope="col">DESCRIPTION</th>
-          <th scope="col">CATEGORIE</th>
           <th scope="col">PRIX</th>
           <th scope="col">QUANTITE</th>
           <th scope="col">PANIER</th>
@@ -17,7 +28,6 @@
           <th scope="row">{{ training.id }}</th>
           <td>{{ training.name }}</td>
           <td>{{ training.description }}</td>
-          <td>{{ training.category.name }}</td>
           <td>{{ training.price }} €</td>
           <td>
             <input

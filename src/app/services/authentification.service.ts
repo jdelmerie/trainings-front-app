@@ -42,8 +42,6 @@ export class AuthentificationService {
         }
       }
     }
-
-    console.log("auth service : isAdmin : " + this.isAdmin)
   }
 
   //disconnect user

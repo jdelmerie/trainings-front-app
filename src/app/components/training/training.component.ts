@@ -17,6 +17,7 @@ export class TrainingComponent implements OnInit {
   training: Training | undefined;
   displayForm: boolean = false;
   status: boolean = false;
+  isAdmin: boolean = false;
 
   constructor(
     private authService: AuthentificationService,
@@ -31,25 +32,27 @@ export class TrainingComponent implements OnInit {
       description: ['', [Validators.required]],
       price: ['', [Validators.required]],
     });
-
-    this.router;
   }
   ngOnInit(): void {
-    let id = this.route.snapshot.params['id'];
-    if (id > 0) {
-      this.status = true;
-      this.trainingsService.getOneTraining(id).subscribe({
-        next: (data) => {
-          this.training = data;
-          this.myForm.setValue({
-            id: this.training.id,
-            name: this.training.name,
-            description: this.training.description,
-            price: this.training.price,
-          });
-        },
-        error: (err) => (this.error = err),
-      });
+    if (this.authService.isAdmin){
+       let id = this.route.snapshot.params['id'];
+       if (id > 0) {
+         this.status = true;
+         this.trainingsService.getOneTraining(id).subscribe({
+           next: (data) => {
+             this.training = data;
+             this.myForm.setValue({
+               id: this.training.id,
+               name: this.training.name,
+               description: this.training.description,
+               price: this.training.price,
+             });
+           },
+           error: (err) => (this.error = err),
+         });
+       }
+    } else {
+      this.router.navigateByUrl('/login');
     }
   }
 
@@ -61,7 +64,7 @@ export class TrainingComponent implements OnInit {
         myForm.value.description,
         myForm.value.price,
         1,
-        new Category(0, "")
+        new Category(0, '')
       );
       if (this.status) {
         this.updateTraining(this.training);

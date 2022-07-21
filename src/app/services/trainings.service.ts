@@ -50,4 +50,8 @@ export class TrainingsService {
       this.httpOptions
     );
   }
+
+  public getByCategories(id:number){
+    return this.http.get<Training[]>(environment.host + '/categorie/' + id + '/trainings')
+  }
 }

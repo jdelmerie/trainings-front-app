@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { TrainingComponent } from './components/training/training.component';
 import { AuthGuardService } from './services/auth-guard.service';
+
 const routes: Routes = [
   {
     path: 'trainings',
@@ -43,6 +44,7 @@ const routes: Routes = [
   {
     path: 'training/:id',
     component: TrainingComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: '404',

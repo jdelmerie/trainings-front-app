@@ -34,11 +34,8 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     if (localStorage.getItem('userConnected') != null) {
-      console.log('peut se connecter');
       this.isAdmin = true;
-    } else {
-      console.log('doit se login');
-    }
+    } 
 
     this.getAllTrainings();
     if (!this.authService.isAdmin) {
@@ -61,7 +58,6 @@ export class AdminComponent implements OnInit {
         error: (err) => (this.error = err.message),
         complete: () => this.getAllTrainings(),
       });
-      console.log(id);
     }
   }
 
