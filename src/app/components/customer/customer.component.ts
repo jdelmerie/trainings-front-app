@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Customer } from 'src/app/model/customer';
+import { AuthentificationService } from 'src/app/services/authentification.service';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -13,6 +14,7 @@ export class CustomerComponent implements OnInit {
   myForm: FormGroup;
   customer = this.cartService.getCustomer();
   constructor(
+    private authService: AuthentificationService,
     public cartService: CartService,
     private router: Router,
     private formBuilder: FormBuilder
@@ -38,7 +40,9 @@ export class CustomerComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {    if (!this.authService.isLogged) {
+    this.router.navigateByUrl('/');
+  }}
 
   onSaveCustomer(form: FormGroup) {
     if (form.valid) {
