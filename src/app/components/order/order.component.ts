@@ -34,7 +34,6 @@ export class OrderComponent implements OnInit {
       this.customer = this.cartService.getCustomer();
       this.order = new Order(0,this.dateOrder.getTime(),this.cartService.getTotalAmount(),  this.customer, 0);
       this.addOrder(this.order); //add order + customer db 
-
       this.cartService.clear();
       this.router.navigateByUrl('/order');
     }

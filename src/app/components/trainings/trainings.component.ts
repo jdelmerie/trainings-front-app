@@ -17,8 +17,7 @@ export class TrainingsComponent implements OnInit {
   categories: Category[] | undefined;
   error = null;
   title: string = '';
-  test: string = '';
-  category: Category | undefined;
+  catLink:number = 0;
 
   constructor(
     private cartService: CartService,
@@ -33,16 +32,16 @@ export class TrainingsComponent implements OnInit {
   }
 
   getByCategories(id: number) {
+    this.catLink = id;
     this.trainingsService.getByCategories(id).subscribe({
-      next: (data) => (this.listTrainings = data),
+      next: (data) => (this.listTrainings = data, this.title = 'Catégorie : ' + data[0].category.name),
       error: (err) => (this.error = err.message),
       complete: () => (this.error = null),
     });
-    this.getOneCategory(id);
-    this.title = 'Catégorie : (afficher le nom après)' 
   }
 
   getAllTrainings() {
+    this.catLink = 0;
     this.trainingsService.getTrainings().subscribe({
       next: (data) => (this.listTrainings = data),
       error: (err) => (this.error = err.message),
@@ -54,14 +53,6 @@ export class TrainingsComponent implements OnInit {
   getCategories() {
     this.categoriesService.getCategories().subscribe({
       next: (data) => (this.categories = data),
-      error: (err) => (this.error = err.message),
-      complete: () => (this.error = null),
-    });
-  }
-
-  getOneCategory(id: number) {
-    this.categoriesService.getOneCategory(id).subscribe({
-      next: (data) => (this.category = data),
       error: (err) => (this.error = err.message),
       complete: () => (this.error = null),
     });

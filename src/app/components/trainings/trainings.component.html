@@ -1,15 +1,14 @@
 <div class="container">
   <ul class="nav nav-tabs mb-3">
     <li class="nav-item">
-      <a class="nav-link active" aria-current="page" (click)="getAllTrainings()">Toutes les formations</a>
+      <a class="nav-link" [ngClass]="{'cat': catLink === 0 }" aria-current="page" (click)="getAllTrainings()">Toutes les formations</a>
     </li>
     <ng-container *ngIf="(categories | keyvalue)?.length; else empty">
       <li class="nav-item" *ngFor="let cat of categories">
-        <a class="nav-link active" aria-current="page" (click)="getByCategories(cat.id)" >{{ cat.name }}</a>
+        <a class="nav-link" [ngClass]="{'cat': catLink === cat.id }" aria-current="page" (click)="getByCategories(cat.id)" >{{ cat.name }}</a>
       </li>
     </ng-container>
   </ul>
-  <!-- [routerLink]="['/trainings/categorie/', '{{cat.id}}']" -->
   <ng-container *ngIf="(listTrainings | keyvalue)?.length; else empty">
     <h2>{{title}}</h2>
     <table class="table">
