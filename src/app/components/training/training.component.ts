@@ -3,9 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from 'src/app/model/category';
 import { Training } from 'src/app/model/training';
+import { ApiService } from 'src/app/services/api.service';
 import { AuthentificationService } from 'src/app/services/authentification.service';
-import { CategoriesService } from 'src/app/services/categories.service';
-import { TrainingsService } from 'src/app/services/trainings.service';
 
 @Component({
   selector: 'app-training',
@@ -26,10 +25,9 @@ export class TrainingComponent implements OnInit {
   constructor(
     private authService: AuthentificationService,
     private router: Router,
-    private trainingsService: TrainingsService,
+    private api: ApiService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private categoriesService: CategoriesService
   ) {
     this.myForm = this.formBuilder.group({
       id: [0, [Validators.required]],
@@ -46,7 +44,7 @@ export class TrainingComponent implements OnInit {
       if (id > 0) {
         this.status = true;
         this.title = 'Modifier cette formation';
-        this.trainingsService.getOneTraining(id).subscribe({
+        this.api.getOneTraining(id).subscribe({
           next: (data) => {
             this.training = data;
             this.myForm.setValue({
@@ -85,7 +83,7 @@ export class TrainingComponent implements OnInit {
   }
 
   addTraining(training: Training) {
-    this.trainingsService.add(training).subscribe({
+    this.api.add(training).subscribe({
       next: (data) => console.log(data),
       error: (err) => (this.error = err.message),
       complete: () => this.router.navigateByUrl('admin'),
@@ -93,7 +91,7 @@ export class TrainingComponent implements OnInit {
   }
 
   updateTraining(training: Training) {
-    this.trainingsService.update(training).subscribe({
+    this.api.update(training).subscribe({
       next: (data) => console.log(data),
       error: (err) => (this.error = err.message),
       complete: () => this.router.navigateByUrl('admin'),
@@ -101,7 +99,7 @@ export class TrainingComponent implements OnInit {
   }
 
   getCategories() {
-    this.categoriesService.getCategories().subscribe({
+    this.api.getCategories().subscribe({
       next: (data) => (this.categories = data),
       error: (err) => (this.error = err.message),
       complete: () => (this.error = null),
@@ -109,7 +107,7 @@ export class TrainingComponent implements OnInit {
   }
 
   getOneCategory(id: number) {
-    this.categoriesService.getOneCategory(id).subscribe({
+    this.api.getOneCategory(id).subscribe({
       next: (data) => (this.category = data),
       error: (err) => (this.error = err.message),
       complete: () => (this.error = null),
