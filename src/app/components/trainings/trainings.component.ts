@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { Training } from 'src/app/model/training';
 import { CartService } from 'src/app/services/cart.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TrainingsService } from 'src/app/services/trainings.service';
+import { Router } from '@angular/router';
 import { Category } from 'src/app/model/category';
-import { CategoriesService } from 'src/app/services/categories.service';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-trainings',
@@ -22,8 +21,8 @@ export class TrainingsComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private router: Router,
-    private trainingsService: TrainingsService,
-    private categoriesService: CategoriesService
+    private api: ApiService,
+
   ) {}
 
   ngOnInit(): void {
@@ -33,8 +32,8 @@ export class TrainingsComponent implements OnInit {
 
   getByCategories(id: number) {
     this.catLink = id;
-    this.trainingsService.getByCategories(id).subscribe({
-      next: (data) => (this.listTrainings = data, this.title = 'Catégorie : ' + data[0].category.name),
+    this.api.getByCategories(id).subscribe({
+      next: (data) => (this.listTrainings = data, this.title = data[0].category.name),
       error: (err) => (this.error = err.message),
       complete: () => (this.error = null),
     });
@@ -42,7 +41,7 @@ export class TrainingsComponent implements OnInit {
 
   getAllTrainings() {
     this.catLink = 0;
-    this.trainingsService.getTrainings().subscribe({
+    this.api.getTrainings().subscribe({
       next: (data) => (this.listTrainings = data),
       error: (err) => (this.error = err.message),
       complete: () => (this.error = null),
@@ -51,7 +50,7 @@ export class TrainingsComponent implements OnInit {
   }
 
   getCategories() {
-    this.categoriesService.getCategories().subscribe({
+    this.api.getCategories().subscribe({
       next: (data) => (this.categories = data),
       error: (err) => (this.error = err.message),
       complete: () => (this.error = null),

@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Customer } from 'src/app/model/customer';
 import { Order } from 'src/app/model/order';
+import { ApiService } from 'src/app/services/api.service';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { CartService } from 'src/app/services/cart.service';
-import { OrderService } from 'src/app/services/order.service';
 
 @Component({
   selector: 'app-order',
@@ -21,7 +21,7 @@ export class OrderComponent implements OnInit {
   constructor(
     public cartService: CartService,
     private router: Router,
-    private orderService: OrderService,
+    private api: ApiService,
     private authService: AuthentificationService
   ) {}
 
@@ -50,7 +50,7 @@ export class OrderComponent implements OnInit {
   }
 
   addOrder(order: Order) {
-    this.orderService.addOrder(order).subscribe({
+    this.api.addOrder(order).subscribe({
       next: (data) => (this.confirmationNumber = data.number),
       error: (err) => (this.error = err.message),
       complete: () =>
