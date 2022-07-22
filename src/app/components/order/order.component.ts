@@ -30,20 +30,18 @@ export class OrderComponent implements OnInit {
   }
 
   onOrder() {
-    if (confirm("Aujourd'hui c'est gratuit, merci de votre visite !")) {
-      this.customer = this.cartService.getCustomer();
-      this.order = new Order(0,this.dateOrder.getTime(),this.cartService.getTotalAmount(),  this.customer, 0);
-      this.addOrder(this.order); //add order + customer db 
-      this.cartService.clear();
-      this.router.navigateByUrl('/order');
-    }
+    this.customer = this.cartService.getCustomer();
+    this.order = new Order(0,this.dateOrder.getTime(),this.cartService.getTotalAmount(),  this.customer, 0);
+    this.addOrder(this.order); //add order + customer db 
+    this.cartService.clear();
+    this.router.navigateByUrl('/order');    
   }
 
   addOrder(order: Order) {
     this.orderService.addOrder(order).subscribe({
       next: (data) => (this.confirmationNumber = data.number),
       error: (err) => (this.error = err.message),
-      complete: () => console.log('COMMANDE CONFIRM : ' + this.confirmationNumber),
+      complete: () => confirm("Votre commande n°" + this.confirmationNumber +" a bien été confirmé, vous pouvez passer au paiement !"),
     });
   }
 }

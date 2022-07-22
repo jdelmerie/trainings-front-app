@@ -26,7 +26,7 @@ import { TrainingComponent } from './components/training/training.component';
     OrderComponent,
     LoginComponent,
     AdminComponent,
-    TrainingComponent,
+    TrainingComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule, ReactiveFormsModule],
   providers: [CartService],
